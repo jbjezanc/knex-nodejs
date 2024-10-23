@@ -1,9 +1,10 @@
 import { Knex } from "knex"
 import { faker } from "@faker-js/faker"
+import { Genre } from "../src/types"
 
 const SEED_COUNT = 10
 
-const createGenre = () => ({
+const createGenre = (): Partial<Genre> => ({
   name: faker.lorem.words(2),
 })
 
