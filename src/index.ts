@@ -8,7 +8,6 @@ import {
 
 const main = async () => {
   await onDatabaseConnect()
-  // const authors = await getAllAuthors(2, 0)
   // skip the first two, return the two
   const authors = await getAuthors(2, 2)
   const books = await getBooks(2, 0)

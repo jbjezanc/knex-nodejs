@@ -4,9 +4,6 @@ export const getAuthors = async (
   limit: number,
   offset: number
 ) => {
-  // const authors = await knex("authors")
-  // const authors = await knex("authors").select('id')
-  // const authors = await knex('authors').orderBy('name', 'desc')
   const authors = await knex("authors")
     .limit(limit)
     .offset(offset)
