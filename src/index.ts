@@ -1,21 +1,20 @@
 import { onDatabaseConnect } from "./config/knex"
-import {
-  getAuthorById,
-  getAuthors,
-  getBookById,
-  getBooks,
-} from "./operations/crud"
+import { createAuthor, createBook } from "./operations/crud"
 
 const main = async () => {
   await onDatabaseConnect()
-  // skip the first two, return the two
-  const authors = await getAuthors(2, 2)
-  const books = await getBooks(2, 0)
-  const author = await getAuthorById(1)
-  const book = await getBookById(1)
-  console.log(authors)
-  console.log(books)
-  console.log(author)
+
+  // const author = await createAuthor({
+  //   name: "Test Author",
+  //   bio: "Test Bio",
+  // })
+  const book = await createBook({
+    title: "Test Book Title 2",
+    description: "Test Book Description 2",
+    price: 100,
+    author_id: 6,
+    genre_id: 4,
+  })
   console.log(book)
 }
 
