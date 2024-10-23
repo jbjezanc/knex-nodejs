@@ -14,7 +14,8 @@ export async function seed(knex: Knex): Promise<void> {
     createGenre
   )
   // Deletes ALL existing entries
-  await knex("genres").del()
+  //   await knex("genres").del()
+
   // Inserts seed entries
   await knex("genres").insert(genres)
 }
