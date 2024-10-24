@@ -1,8 +1,8 @@
 import { onDatabaseConnect } from "./config/knex"
 import {
-  createAuthor,
-  updateAuthor,
-  createBook,
+  // createAuthor,
+  // updateAuthor,
+  // createBook,
   updateBook,
 } from "./operations/crud"
 
