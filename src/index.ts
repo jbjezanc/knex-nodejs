@@ -1,9 +1,16 @@
 import { onDatabaseConnect } from "./config/knex"
-import { removeAuthor } from "./operations/crud"
+import { getTopAuthorsWithBooksCount } from "./operations/relations"
 
 const main = async () => {
   await onDatabaseConnect()
-  await removeAuthor(99)
+  // const books = await getBooksWithAuthorAndGenre()
+  // console.log(books)
+
+  // const authors = await getAuthorsWithBooksCount()
+  // console.log(authors)
+
+  const topFiveAuthors = await getTopAuthorsWithBooksCount()
+  console.log(topFiveAuthors)
 }
 
 main()
