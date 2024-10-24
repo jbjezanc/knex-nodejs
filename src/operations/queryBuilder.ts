@@ -1,34 +1,29 @@
 import knex from "../config/knex"
 import { Author } from "../types"
 
-// A pagination query with total results for frontend page navigation
-// This is a rather necessary N+1 query (which are bad btw)
 export const getAuthorsPaginated = async (
   limit: number,
   offset: number
 ): Promise<{ results: Author[]; count: number }> => {
-  // the type of this constant is a Knex.QueryBuilder<..,..>
   const queryBuilder = knex("authors")
-  // so we can build on top of it
-  queryBuilder.limit(limit)
-  queryBuilder.offset(offset)
-
-  // cloning the queryBuilder will not affect the original query
-  const queryBuilderTwo = queryBuilder.clone()
-  queryBuilderTwo.where('id', 10)
-  // we can clear some statements added by the original queryBuilder
-  queryBuilderTwo.clearSelect()
-  // we can clear count statements
-  queryBuilderTwo.clearCounters()
-  // we can clear groupBy statements
-  queryBuilderTwo.clearGroup()
-
-  // finally, we can execute the queryBuilderTwo
-  const result = await queryBuilderTwo
-
+    // .select("id") // this would break the cloned query builder as it is now
+    .where("name", "like", "%a%")
+  // First, use the query builder to await the authors themselves
   const authors = await queryBuilder
+    .limit(limit)
+    .offset(offset)
+
+  // Then, clone it to count the number of records that the original
+  // query builder would return
+  // If we insisted on selecting only the 'id' column in the original query builder,
+  // then we would need to clear selects in this query
   const count = Number(
-    (await knex("authors").count().first())?.count
+    (
+      await queryBuilder
+        .clone()
+        .count()
+        ./* clearSelect(). */ first()
+    )?.count
   )
 
   return {
