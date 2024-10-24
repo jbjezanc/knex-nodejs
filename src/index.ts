@@ -1,21 +1,44 @@
 import { onDatabaseConnect } from "./config/knex"
-import { createAuthor, createBook } from "./operations/crud"
+import {
+  createAuthor,
+  updateAuthor,
+  createBook,
+  updateBook,
+} from "./operations/crud"
 
 const main = async () => {
   await onDatabaseConnect()
 
-  // const author = await createAuthor({
-  //   name: "Test Author",
-  //   bio: "Test Bio",
+  // const newAuthor = await createAuthor({
+  //   name: "Another Author",
+  //   bio: "His Latest",
   // })
-  const book = await createBook({
-    title: "Test Book Title 2",
-    description: "Test Book Description 2",
-    price: 100,
-    author_id: 6,
-    genre_id: 4,
+  // console.log(newAuthor.id) // 111
+
+  // const updatedAuthor = await updateAuthor(111, {
+  //   name: "Another Author Updated",
+  //   bio: "Update Bio ",
+  // })
+
+  // const book = await createBook({
+  //   title: "New Book",
+  //   description: "This is a new book",
+  //   price: 45,
+  //   author_id: 111,
+  //   genre_id: 10,
+  // })
+
+  // console.log(book) // id: 207
+
+  const updatedBook = await updateBook(207, {
+    title: "New Book Updated",
+    description: "This is a new book updated",
+    price: 11,
+    author_id: 99,
+    genre_id: 9,
   })
-  console.log(book)
+
+  console.log(updatedBook)
 }
 
 main()

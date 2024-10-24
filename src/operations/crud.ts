@@ -61,6 +61,37 @@ export const createBook = async (body: Partial<Book>) => {
   return book[0]
 }
 
+/********* UPDATE OPERATIONS **********/
+
+export const updateAuthor = async (
+  id: number,
+  body: Partial<Author>
+) => {
+  await checkAuthorExists(id)
+  const author = await knex("authors")
+    .where({ id })
+    .update(body, "*")
+
+  return author[0]
+}
+
+export const updateBook = async (
+  id: number,
+  body: Partial<Book>
+) => {
+  if (body.author_id) {
+    await checkAuthorExists(body.author_id)
+  }
+  if (body.genre_id) {
+    await checkGenreExists(body.genre_id)
+  }
+  const book = await knex("books")
+    .where({ id })
+    .update(body, "*")
+
+  return book[0]
+}
+
 /********* VALIDATION OPERATIONS **********/
 
 export const checkAuthorExists = async (id?: number) => {
