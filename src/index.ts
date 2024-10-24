@@ -1,19 +1,11 @@
 import { onDatabaseConnect } from "./config/knex"
-import {
-  createAuthorWithBook,
-  getLastAuthor,
-} from "./operations/transactions"
+import { getAuthorsPaginated } from "./operations/queryBuilder"
 
 const main = async () => {
   await onDatabaseConnect()
 
-  const lastAuthor = await getLastAuthor()
-  console.log(lastAuthor)
-
-  await createAuthorWithBook()
-
-  const newLastAuthor = await getLastAuthor()
-  console.log(newLastAuthor)
+  const authors = await getAuthorsPaginated(10, 0)
+  console.log(authors)
 }
 
 main()
