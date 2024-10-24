@@ -1,5 +1,7 @@
 import { onDatabaseConnect } from "./config/knex"
 import {
+  removeAuthor,
+  removeBook,
   // createAuthor,
   // updateAuthor,
   // createBook,
@@ -30,15 +32,24 @@ const main = async () => {
 
   // console.log(book) // id: 207
 
-  const updatedBook = await updateBook(207, {
-    title: "New Book Updated",
-    description: "This is a new book updated",
-    price: 11,
-    author_id: 99,
-    genre_id: 9,
-  })
+  // const updatedBook = await updateBook(207, {
+  //   title: "New Book Updated",
+  //   description: "This is a new book updated",
+  //   price: 11,
+  //   author_id: 99,
+  //   genre_id: 9,
+  // })
 
-  console.log(updatedBook)
+  // console.log(updatedBook)
+
+  // await removeAuthor(99)
+  // Error: This author has books, thus cannot be deleted
+
+  // await removeBook(207)
+  // await removeBook(130)
+
+  // now is ok, since we have deleted the author's book with ids 207 and 130
+  await removeAuthor(99)
 }
 
 main()

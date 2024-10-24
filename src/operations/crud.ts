@@ -92,6 +92,34 @@ export const updateBook = async (
   return book[0]
 }
 
+/********* DELETE OPERATIONS **********/
+
+export const removeBook = async (id: number) => {
+  await checkBookExists(id)
+  await knex("books").where({ id }).delete()
+  return true
+}
+
+export const removeAuthor = async (id: number) => {
+  await checkAuthorExists(id)
+  const booksCount = (
+    await knex("books")
+      .where({
+        author_id: id,
+      })
+      .count()
+      .first()
+  )?.count
+
+  if (Number(booksCount) > 0) {
+    throw new Error(
+      "This author has books, thus cannot be deleted"
+    )
+  }
+  await knex("authors").where({ id }).delete()
+  return true
+}
+
 /********* VALIDATION OPERATIONS **********/
 
 export const checkAuthorExists = async (id?: number) => {
@@ -107,5 +135,13 @@ export const checkGenreExists = async (id?: number) => {
   const genre = await getGenreById(id)
   if (!genre) {
     throw new Error("The Genre ID is invalid")
+  }
+}
+
+export const checkBookExists = async (id?: number) => {
+  if (!id) throw new Error("Book ID is required")
+  const book = await getBookById(id)
+  if (!book) {
+    throw new Error("The Book ID is invalid")
   }
 }
